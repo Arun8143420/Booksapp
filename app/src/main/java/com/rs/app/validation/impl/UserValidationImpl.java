@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 import com.rs.app.request.RegistrationRequest;
 import com.rs.app.validation.UserValidation;
 
-//validations
+
 
 @Component
 public class UserValidationImpl implements UserValidation {
