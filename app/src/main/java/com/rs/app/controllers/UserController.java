@@ -27,16 +27,15 @@ public class UserController {
 	@PostMapping("/users")
 	public ResponseEntity<String> registration(@RequestBody RegistrationRequest request) {
 
-		/*
-		 * Set<String> errorMessages =
-		 * userValidation.validateRegistrationRequest(request);
-		 */
+		Set<String> errorMessages = userValidation.validateRegistrationRequest(request);
+
 		boolean isRegistersd = false;
+		if (errorMessages.isEmpty() && errorMessages != null) {
+			isRegistersd = userService.registration(request);
+			if (isRegistersd) {
+				return new ResponseEntity<String>("User registred successfully", HttpStatus.OK);
 
-		isRegistersd = userService.registration(request);
-		if (isRegistersd) {
-			return new ResponseEntity<String>("User registred successfully", HttpStatus.OK);
-
+			}
 		}
 		return new ResponseEntity<>("Registration got failed", HttpStatus.INTERNAL_SERVER_ERROR);
 	}

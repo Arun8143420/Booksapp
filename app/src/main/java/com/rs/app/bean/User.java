@@ -1,13 +1,16 @@
 package com.rs.app.bean;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Document
+@Document(collection = "user")
 @Setter
 @Getter
 public class User {
@@ -33,7 +36,10 @@ public class User {
 
 	@Field
 	private String userType;
-
+	
+	@DBRef
+	private List<Product> products;
+	
 	public User() {
 	}
 
