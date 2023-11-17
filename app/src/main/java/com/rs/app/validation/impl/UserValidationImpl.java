@@ -2,6 +2,7 @@
 package com.rs.app.validation.impl;
 
 import java.util.LinkedHashSet;
+
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -9,6 +10,8 @@ import org.springframework.util.StringUtils;
 
 import com.rs.app.request.RegistrationRequest;
 import com.rs.app.validation.UserValidation;
+
+//validations
 
 @Component
 public class UserValidationImpl implements UserValidation {
