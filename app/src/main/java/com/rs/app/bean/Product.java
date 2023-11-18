@@ -27,6 +27,8 @@ public class Product {
 	private String file;
 	@Field
 	private String uId;
+	@Field
+	private String category;
 
 	public Product() {
 	}
