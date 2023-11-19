@@ -6,7 +6,7 @@ import com.rs.app.request.RegistrationRequest;
 
 public interface UserValidation {
 
-	
+	//VALIDATIONS//
 	  Set<String> validateRegistrationRequest(RegistrationRequest request);
 	  
 	 }
