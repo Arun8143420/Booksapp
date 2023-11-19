@@ -20,11 +20,21 @@ public class Product {
 	private String author;
 	private String description;
 	private String language;
+<<<<<<< HEAD
 	private String category;
 	private int pages;
 	
 	private File file;
 	
+=======
+	@Field
+	private String file;
+	@Field
+	private String uId;
+	@Field
+	private String category;
+
+>>>>>>> b49da95494a4926f7ef824172672379c27eaacf3
 	public Product() {
 	}
 
