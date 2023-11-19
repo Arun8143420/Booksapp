@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rs.app.bean.Product;
-import com.rs.app.bean.User;
 import com.rs.app.repositories.ProductRepository;
-import com.rs.app.repositories.UserRepository;
 import com.rs.app.request.AddProductRequest;
-import com.rs.app.request.RegistrationRequest;
 import com.rs.app.service.ProductService;
 
 @Service
@@ -29,7 +26,6 @@ public class ProductServiceImpl  implements ProductService{
 			product.setDescription(request.getDescription());
 			product.setLanguage(request.getLanguage());
 			product.setFile(request.getFile());
-			product.setUId(request.getUId());
 			
 			
 		}

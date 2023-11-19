@@ -8,6 +8,8 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.rs.app.request.GetUserIdRequest;
+import com.rs.app.request.LoginRequest;
 import com.rs.app.request.RegistrationRequest;
 import com.rs.app.validation.UserValidation;
 
@@ -39,6 +41,25 @@ public class UserValidationImpl implements UserValidation {
 		errorMessages = validate(errorMessages, request.getMobile(), "Mobile");
 		errorMessages = validate(errorMessages, request.getUserType(), "UserType");
 
+		return errorMessages;
+	}
+
+	@Override
+	public Set<String> validateLoginRequest(LoginRequest request) {
+		
+		Set<String> errorMessages = new LinkedHashSet<String>();
+		
+		errorMessages = validate(errorMessages, request.getUsername(), "UserName");
+		errorMessages = validate(errorMessages, request.getPassword(), "Password");
+		errorMessages = validate(errorMessages, request.getUserType(), "UserType");
+		return errorMessages;
+	}
+
+	@Override
+	public Set<String> validateGetUser(GetUserIdRequest request) {
+		Set<String> errorMessages = new LinkedHashSet<String>();
+
+		errorMessages = validate(errorMessages, request.getId(), "userId");
 		return errorMessages;
 	}
 

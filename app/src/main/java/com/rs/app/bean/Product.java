@@ -1,8 +1,9 @@
 package com.rs.app.bean;
 
+import java.io.File;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,20 +15,16 @@ public class Product {
 	@Id
 	private String pId;
 
-	@Field
 	private String bookTitle;
 
-	@Field
 	private String author;
-	@Field
 	private String description;
-	@Field
 	private String language;
-	@Field
-	private String file;
-	@Field
-	private String uId;
-
+	private String category;
+	private int pages;
+	
+	private File file;
+	
 	public Product() {
 	}
 
@@ -37,8 +34,6 @@ public class Product {
 		this.author = author;
 		this.description = description;
 		this.language = language;
-		this.file = file;
-		this.uId = uId;
 
 	}
 
@@ -46,7 +41,7 @@ public class Product {
 	public String toString() {
 		return String.format(
 				"User[pId='%s',bookTitle='%s',author='%s',description='%s',language='%s',file='%s',uId='%s']", pId,
-				bookTitle, author, description, language, file, uId);
+				bookTitle, author, description, language);
 	}
 
 }
