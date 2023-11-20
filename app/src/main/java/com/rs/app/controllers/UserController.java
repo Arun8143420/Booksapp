@@ -1,6 +1,12 @@
 package com.rs.app.controllers;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,14 +15,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rs.app.bean.MyBooks;
+import com.rs.app.bean.Product;
 import com.rs.app.bean.User;
+import com.rs.app.repositories.MyBooksRepository;
+import com.rs.app.request.AddMyBooksRequest;
+import com.rs.app.request.GetMyBooksRequest;
 import com.rs.app.request.GetUserIdRequest;
 import com.rs.app.request.LoginRequest;
 import com.rs.app.request.RegistrationRequest;
+import com.rs.app.service.ProductService;
 import com.rs.app.service.UserService;
 import com.rs.app.validation.UserValidation;
 
@@ -29,6 +43,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	ProductService productService;
 
 	@PostMapping("/users")
 	public ResponseEntity<String> registration(@RequestBody RegistrationRequest request) {
@@ -64,21 +81,58 @@ public class UserController {
 		GetUserIdRequest request = new GetUserIdRequest();
 		request.setId(id);
 		Set<String> errorMessages = userValidation.validateGetUser(request);
-		
+
 		if (errorMessages.isEmpty() && errorMessages != null) {
 			userService.getUser(request);
 			return new ResponseEntity<String>("User is present", HttpStatus.OK);
 
 		}
 		return new ResponseEntity<>("User is not present", HttpStatus.INTERNAL_SERVER_ERROR);
-	
+
 	}
-	
+
 	/*
 	 * @PutMapping("/update") public ResponseEntity<String> updateUser(@RequestBody
 	 * UpdateUserRequest request){
 	 * 
 	 * }
 	 */
+	@PutMapping("/addMyBooks/{uId}")
+	public ResponseEntity<String> addMyBooks(@PathVariable String uId, @RequestParam String pId) {
+
+		AddMyBooksRequest request = new AddMyBooksRequest();
+		List<String> pIds = new ArrayList<String>();
+		pIds.add(pId);
+		request.setPIds(pIds);
+		request.setUId(uId);
+
+		if (!request.equals(null)) {
+			userService.addMyBooks(request);
+			return new ResponseEntity<String>("Added successfully", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("adding failed", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@GetMapping("/getMyBooks")
+	public ResponseEntity<List<Product>> getMyBooks(@RequestParam String uId) {
+	    GetMyBooksRequest request = new GetMyBooksRequest();
+	    request.setUId(uId);
+
+	    List<MyBooks> myBooksList = userService.getMyBooks(request);
+	    List<Product> books = new LinkedList<>();
+
+	    if (myBooksList != null && !myBooksList.isEmpty()) {
+	        for (MyBooks myBooks : myBooksList) {
+	            Product book = (Product) productService.getProductById(myBooks.getId());
+	            if (book != null) {
+	                books.add(book);
+	            }
+	        }
+	        return new ResponseEntity<>(books, HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    }
+	}
+	
 
 }
