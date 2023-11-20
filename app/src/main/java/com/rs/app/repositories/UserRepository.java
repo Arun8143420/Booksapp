@@ -11,7 +11,7 @@ import com.rs.app.request.RegistrationRequest;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 	
-	List<User> findByUsernameAndPassword(String userName, String password);
+	List<User> findByUsernameAndPasswordAndUserType(String userName, String password, String userType);
 
 	
 }

@@ -1,10 +1,15 @@
 package com.rs.app.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rs.app.bean.User;
 import com.rs.app.repositories.UserRepository;
+import com.rs.app.request.GetUserIdRequest;
+import com.rs.app.request.LoginRequest;
 import com.rs.app.request.RegistrationRequest;
 import com.rs.app.service.UserService;
 
@@ -35,7 +40,7 @@ public class UserServiceImpl implements UserService{
 		User user = setUser(request);
 		boolean isRegistred = false;
 		try {
-			User user1 = userRepository.save(user);
+			userRepository.save(user);
 			isRegistred = true;
 		}catch(Exception e) {
 			
@@ -43,7 +48,20 @@ public class UserServiceImpl implements UserService{
 		return isRegistred;
 	}
 
-	//Arun
-	
-	//121
+	@Override
+	public User login(LoginRequest request) {
+
+		User user = null;
+		List<User> users = userRepository.findByUsernameAndPasswordAndUserType(request.getUsername(), request.getPassword(),request.getUserType());
+		if (users != null && !users.isEmpty()) {
+			user = users.get(0);
+		}
+		return user;
+	}
+
+	@Override
+	public User getUser(GetUserIdRequest request) {
+		Optional<User> oUser = userRepository.findById(request.getId());
+		User user = oUser.get();
+		return user;	}
 }
