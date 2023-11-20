@@ -11,14 +11,17 @@ import com.rs.app.bean.Product;
 public interface ProductRepository extends MongoRepository<Product, String> {
 
 	List<Product> findByAuthor(String author);
-	
+
 	List<Product> findByBookTitle(String title);
-	
+
 	List<Product> findByDescription(String description);
-	
+
 	List<Product> findByLanguage(String language);
-	
+
 	List<Product> findBypId(String pid);
-	
+
 	List<Product> findByuId(String uid);
+
+	List<Product> findByBookTitleContainingOrAuthorContainingOrLanguageContaining(String bookTitle, String author,
+			String language);
 }

@@ -10,9 +10,11 @@ public interface ProductService {
 	public boolean addProduct(AddProductRequest request);
 
 	List<Product> getProductByBookTitle(String bookTitle);
-	
+
 	List<Product> getProductByAuthor(String author);
-	
+
 	List<Product> getProductById(String pId);
-	
+
+	public List<Product> getSearch(String searchParam);
+
 }

@@ -1,17 +1,13 @@
 package com.rs.app.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rs.app.bean.Product;
-import com.rs.app.bean.User;
 import com.rs.app.repositories.ProductRepository;
-import com.rs.app.repositories.UserRepository;
 import com.rs.app.request.AddProductRequest;
-import com.rs.app.request.RegistrationRequest;
 import com.rs.app.service.ProductService;
 
 @Service
@@ -72,5 +68,14 @@ public class ProductServiceImpl  implements ProductService{
 
 		return productRepository.findBypId(pId);
 	}
+	
+	public List<Product> getSearch(String searchParam) {
+
+		List<Product> oProduct = productRepository.findByBookTitleContainingOrAuthorContainingOrLanguageContaining(searchParam,searchParam,searchParam);
+
+		return  oProduct;
+	}
+
+
 	
 }
