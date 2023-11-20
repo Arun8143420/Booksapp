@@ -53,8 +53,6 @@ public class ProductServiceImpl  implements ProductService{
 		
 		return isProductAdded;
 		
-		
-		
 	}
 
 	@Override
@@ -67,6 +65,12 @@ public class ProductServiceImpl  implements ProductService{
 	public List<Product> getProductByAuthor(String author) {
 
 		return productRepository.findByAuthor(author);
+	}
+
+	@Override
+	public List<Product> getProductById(String pId) {
+
+		return productRepository.findBypId(pId);
 	}
 	
 }

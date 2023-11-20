@@ -40,6 +40,9 @@ public class User {
 	@DBRef
 	private List<Product> products;
 	
+	@DBRef
+	private List<MyBooks> pIds;
+	
 	public User() {
 	}
 

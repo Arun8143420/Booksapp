@@ -12,5 +12,7 @@ public interface ProductService {
 	List<Product> getProductByBookTitle(String bookTitle);
 	
 	List<Product> getProductByAuthor(String author);
-
+	
+	List<Product> getProductById(String pId);
+	
 }

@@ -18,7 +18,7 @@ public interface ProductRepository extends MongoRepository<Product, String> {
 	
 	List<Product> findByLanguage(String language);
 	
-	List<Product> findByPId(String pid);
+	List<Product> findBypId(String pid);
 	
-	List<Product> findByUId(String uid);
+	List<Product> findByuId(String uid);
 }
