@@ -1,12 +1,9 @@
 package com.rs.app.controllers;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rs.app.bean.MyBooks;
 import com.rs.app.bean.Product;
 import com.rs.app.bean.User;
-import com.rs.app.repositories.MyBooksRepository;
 import com.rs.app.request.AddMyBooksRequest;
 import com.rs.app.request.GetMyBooksRequest;
 import com.rs.app.request.GetUserIdRequest;
