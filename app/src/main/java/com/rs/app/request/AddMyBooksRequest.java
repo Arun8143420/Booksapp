@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 public class AddMyBooksRequest {
 	
+	private String id;
+	
 	private String uId;
 	
 	private List<String> pIds;

@@ -93,16 +93,21 @@ public class UserController {
 	 * 
 	 * }
 	 */
-	@PutMapping("/addMyBooks/{uId}")
-	public ResponseEntity<String> addMyBooks(@PathVariable String uId, @RequestParam String pId) {
+	@PutMapping("/addMyBooks/{id}")
+	public ResponseEntity<String> addMyBooks(@RequestBody AddMyBooksRequest request) {
 
-		AddMyBooksRequest request = new AddMyBooksRequest();
-		List<String> pIds = new ArrayList<String>();
-		pIds.add(pId);
-		request.setPIds(pIds);
-		request.setUId(uId);
+		GetMyBooksRequest uId = new GetMyBooksRequest();
+		uId.setUId(request.getUId());
+		
+		List<MyBooks> myBooksList = userService.getMyBooks(uId);
+		List<String> pIds = myBooksList.get(0).getPIds();
+		pIds.add(request.getPIds().get(0));
+		if (request.getId() != null && !myBooksList.isEmpty()) {
+			request.setPIds(pIds);
+		}
 
 		if (!request.equals(null)) {
+
 			userService.addMyBooks(request);
 			return new ResponseEntity<String>("Added successfully", HttpStatus.OK);
 		}
@@ -111,24 +116,23 @@ public class UserController {
 
 	@GetMapping("/getMyBooks")
 	public ResponseEntity<List<Product>> getMyBooks(@RequestParam String uId) {
-	    GetMyBooksRequest request = new GetMyBooksRequest();
-	    request.setUId(uId);
+		GetMyBooksRequest request = new GetMyBooksRequest();
+		request.setUId(uId);
 
-	    List<MyBooks> myBooksList = userService.getMyBooks(request);
-	    List<Product> books = new LinkedList<>();
-
-	    if (myBooksList != null && !myBooksList.isEmpty()) {
-	        for (MyBooks myBooks : myBooksList) {
-	            Product book = (Product) productService.getProductById(myBooks.getId());
-	            if (book != null) {
-	                books.add(book);
-	            }
-	        }
-	        return new ResponseEntity<>(books, HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	    }
+		List<MyBooks> myBooksList = userService.getMyBooks(request);
+		List<Product> myBooks = new LinkedList<>();
+		List<String> pids = myBooksList.get(0).getPIds();
+		if (myBooksList != null && !myBooksList.isEmpty()) {
+			for (String pid : pids) {
+				List<Product> books = productService.getProductById(pid);
+				if (books != null) {
+					myBooks.add(books.get(0));
+				}
+			}
+			return new ResponseEntity<>(myBooks, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
 	}
-	
 
 }

@@ -19,18 +19,18 @@ import com.rs.app.request.RegistrationRequest;
 import com.rs.app.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Autowired
-	 UserRepository userRepository;
-	
+	UserRepository userRepository;
+
 	@Autowired
 	MyBooksRepository myBooksRepository;
-	
+
 	private User setUser(RegistrationRequest request) {
 		User user = new User();
-		
-		if(request != null) {
+
+		if (request != null) {
 			user.setFirstName(request.getFirstName());
 			user.setMiddleName(request.getMiddleName());
 			user.setLastName(request.getLastName());
@@ -41,25 +41,28 @@ public class UserServiceImpl implements UserService{
 		}
 		return user;
 	}
+
 	private MyBooks setMyBooks(AddMyBooksRequest request) {
-		MyBooks myBooks =  new MyBooks();
-		
+		MyBooks myBooks = new MyBooks();
+
 		myBooks.setUId(request.getUId());
 		myBooks.setPIds(request.getPIds());
-		
+		if (request.getId() != null) {
+			myBooks.setId(request.getId());
+		}
 		return myBooks;
 	}
 
 	@Override
 	public boolean registration(RegistrationRequest request) {
-		
+
 		User user = setUser(request);
 		boolean isRegistred = false;
 		try {
 			userRepository.save(user);
 			isRegistred = true;
-		}catch(Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 		return isRegistred;
 	}
@@ -68,7 +71,8 @@ public class UserServiceImpl implements UserService{
 	public User login(LoginRequest request) {
 
 		User user = null;
-		List<User> users = userRepository.findByUsernameAndPasswordAndUserType(request.getUsername(), request.getPassword(),request.getUserType());
+		List<User> users = userRepository.findByUsernameAndPasswordAndUserType(request.getUsername(),
+				request.getPassword(), request.getUserType());
 		if (users != null && !users.isEmpty()) {
 			user = users.get(0);
 		}
@@ -79,34 +83,32 @@ public class UserServiceImpl implements UserService{
 	public User getUser(GetUserIdRequest request) {
 		Optional<User> oUser = userRepository.findById(request.getId());
 		User user = oUser.get();
-		return user;	}
+		return user;
+	}
 
 	@Override
 	public boolean addMyBooks(AddMyBooksRequest request) {
-		MyBooks myBooks= setMyBooks(request);
+		MyBooks myBooks = setMyBooks(request);
 		try {
-			
+
 			myBooksRepository.save(myBooks);
 			return true;
-		}catch(Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 		return false;
 	}
+
 	@Override
 	public List<MyBooks> getMyBooks(GetMyBooksRequest request) {
-	    // Validate the input request, e.g., check if uId is not null or empty
-	    if (request == null || request.getUId() == null || request.getUId().isEmpty()) {
-	        // Handle validation error, throw an exception, or return an empty list
-	        return Collections.emptyList();
-	    }
 
-	    // Call the repository method to retrieve MyBooks based on uId
-	    List<MyBooks> myBooksList = myBooksRepository.findByuId(request.getUId());
+		if (request == null || request.getUId() == null || request.getUId().isEmpty()) {
 
-	    // You might want to log or handle cases where myBooksList is null
+			return Collections.emptyList();
+		}
+		List<MyBooks> myBooksList = myBooksRepository.findByuId(request.getUId());
 
-	    return myBooksList != null ? myBooksList : Collections.emptyList();
+		return myBooksList != null ? myBooksList : Collections.emptyList();
 	}
 
 }
