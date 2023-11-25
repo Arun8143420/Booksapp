@@ -3,6 +3,7 @@ package com.rs.app.bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public class Product {
 	@Field
 	private String language;
 	@Field
-	private String file;
+	private MultipartFile file;
 	@Field
 	private String uId;
 	@Field
@@ -39,7 +40,6 @@ public class Product {
 		this.author = author;
 		this.description = description;
 		this.language = language;
-		this.file = file;
 		this.uId = uId;
 
 	}

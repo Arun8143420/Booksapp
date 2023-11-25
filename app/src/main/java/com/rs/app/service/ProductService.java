@@ -2,12 +2,14 @@ package com.rs.app.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.rs.app.bean.Product;
 import com.rs.app.request.AddProductRequest;
 
 public interface ProductService {
 
-	public boolean addProduct(AddProductRequest request);
+	public boolean addProduct(AddProductRequest request, MultipartFile file);
 
 	List<Product> getProductByBookTitle(String bookTitle);
 
@@ -16,5 +18,9 @@ public interface ProductService {
 	List<Product> getProductById(String pId);
 
 	public List<Product> getSearch(String searchParam);
+	
+	public boolean uploadFile(String file1);
+	public String uploadPdf(MultipartFile file);
+
 
 }

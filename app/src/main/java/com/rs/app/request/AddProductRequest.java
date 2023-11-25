@@ -1,5 +1,6 @@
 package com.rs.app.request;
 
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -9,8 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddProductRequest {
-	
+
 	private String pId;
+
 	
     @NotBlank(message = "Booktitle is required")
 	private String bookTitle;
@@ -28,6 +30,7 @@ public class AddProductRequest {
 	private String file;
 	
     @NotBlank(message = "uId name is required")
+
 	private String uId;
 
 }

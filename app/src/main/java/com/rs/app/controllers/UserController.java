@@ -1,6 +1,5 @@
 package com.rs.app.controllers;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -70,6 +69,7 @@ public class UserController {
 
 		if (request != null) {
 			User user = userService.login(request);
+
 			return new ResponseEntity<String>("User is present", HttpStatus.OK);
 
 		}
