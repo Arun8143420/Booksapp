@@ -5,9 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +35,7 @@ import com.rs.app.validation.UserValidation;
 
 @RestController
 @RequestMapping("/api")
+@Validated
 public class UserController {
 
 	@Autowired
@@ -44,14 +48,14 @@ public class UserController {
 	ProductService productService;
 
 	@PostMapping("/users")
-	public ResponseEntity<String> registration(@RequestBody RegistrationRequest request) {
+	public ResponseEntity<String> registration(@RequestBody @Valid RegistrationRequest request) {
 
-		Set<String> errorMessages = userValidation.validateRegistrationRequest(request);
-
-		boolean isRegistersd = false;
-		if (errorMessages.isEmpty() && errorMessages != null) {
-			isRegistersd = userService.registration(request);
-			if (isRegistersd) {
+		//Set<String> errorMessages = userValidation.validateRegistrationRequest(request);
+		
+		boolean isRegistered = false;
+		if (request != null) {
+			isRegistered = userService.registration(request);
+			if (isRegistered) {
 				return new ResponseEntity<String>("User registred successfully", HttpStatus.OK);
 
 			}
@@ -60,11 +64,11 @@ public class UserController {
 	}
 
 	@GetMapping("/login")
-	public ResponseEntity<String> login(@ModelAttribute LoginRequest request) {
+	public ResponseEntity<String> login(@ModelAttribute @Valid LoginRequest request) {
 
-		Set<String> errorMessages = userValidation.validateLoginRequest(request);
+		//Set<String> errorMessages = userValidation.validateLoginRequest(request);
 
-		if (errorMessages.isEmpty() && errorMessages != null) {
+		if (request != null) {
 			User user = userService.login(request);
 			return new ResponseEntity<String>("User is present", HttpStatus.OK);
 

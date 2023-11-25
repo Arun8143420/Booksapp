@@ -2,9 +2,12 @@ package com.rs.app.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,7 @@ import com.rs.app.service.ProductService;
 
 @RestController
 @RequestMapping("/api")
+@Validated
 public class ProductController {
 
 	public final ProductRepository ProductRepository;
@@ -33,7 +37,7 @@ public class ProductController {
 	}
 
 	@PostMapping("/addProduct")
-	public ResponseEntity<String> addProduct(@RequestBody AddProductRequest request) {
+	public ResponseEntity<String> addProduct(@RequestBody  @Valid AddProductRequest request) {
 
 		boolean isAddProduct = false;
 
